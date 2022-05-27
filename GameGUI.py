@@ -1,8 +1,8 @@
 from tkinter import *
 from tkinter import ttk
-
-
 from GuessGame import play_gui as guess_game_play
+from MemoryGame import  play_gui as memory_game_play
+
 
 class GUI:
 
@@ -35,16 +35,16 @@ class GUI:
         if self.game_frame is not None:
             self.game_frame.destroy()
 
+        self.game_frame = ttk.Frame(self.mainframe, style='main.TFrame')
+        self.game_frame.grid(row=6, columnspan=2)
         if game == 'Guess Game':
-            self.game_frame = ttk.Frame(self.mainframe, padding=20, style='main.TFrame')
-            self.game_frame.grid(row=6, columnspan=2)
             guess_game_play(difficulty, self.game_frame)
+        elif game == 'Memory Game':
+            memory_game_play(self.game_frame, difficulty)
 
     def draw_separator(self):
         separator = ttk.Separator(self.mainframe, orient='horizontal')
         separator.grid(row=5, columnspan=2, column=0, sticky='ew', pady=15)
-
-
 
     def __init__(self):
         self.header_label = None
@@ -61,6 +61,11 @@ class GUI:
         self.frame_style.configure('main.TFrame', background=self.BG)
         self.default_label_style = ttk.Style()
         self.default_label_style.configure('main.TLabel', background=self.BG, foreground='#ffffff')
+        self.big_label_style = ttk.Style()
+        self.big_label_style.configure('sequence.TLabel', font='helvetica 24', foreground='#333333', padding='20')
+        self.input_style = ttk.Style()
+        self.input_style.configure('input.TEntry', font='helvetica 18', foreground='#333333')
+
         self.options_style = ttk.Style()
         self.options_style.configure('main.OptionMenu', background=self.BG)
 
