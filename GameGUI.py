@@ -1,8 +1,8 @@
 from tkinter import *
 from tkinter import ttk
 from GuessGame import play_gui as guess_game_play
-from MemoryGame import  play_gui as memory_game_play
-
+from MemoryGame import play_gui as memory_game_play
+from CurrencyRouletteGame import play_game_gui as currency_play_gui
 
 class GUI:
 
@@ -41,6 +41,8 @@ class GUI:
             guess_game_play(difficulty, self.game_frame)
         elif game == 'Memory Game':
             memory_game_play(self.game_frame, difficulty)
+        else:
+            currency_play_gui(self.game_frame, difficulty)
 
     def draw_separator(self):
         separator = ttk.Separator(self.mainframe, orient='horizontal')
