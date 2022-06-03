@@ -37,7 +37,12 @@ class GameGui:
             if is_guess_right(self.convertedUSD, user_input, self.difficulty):
                 self.set_messages_label_text('Great job!')
             else:
-                self.set_messages_label_text('Guess is not exact enough..')
+                self.set_messages_label_text(f'Guess is not exact enough, the USD value is ${self.convertedUSD}')
+            self.disable_game()
+
+    def disable_game(self):
+        self.main_entry.config(state=tk.DISABLED)
+        self.main_button.config(state=tk.DISABLED)
 
     def set_messages_label_text(self, text):
         self.msg_label.config(text=text)

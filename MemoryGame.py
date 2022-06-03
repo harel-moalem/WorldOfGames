@@ -68,22 +68,39 @@ class FrameData:
         self.go_btn.configure(text='Guess!', command=self.check_numbers)
         self.go_btn.grid(row=self.add_row(), pady='15 0', columnspan=len(self.generated_numbers))
 
-    def check_numbers(self):
+    def get_entries(self):
         children_widgets = self.frame.winfo_children()
-        number_from_user = []
+        entries = []
         for child_widget in children_widgets:
             if child_widget.winfo_class() == 'TEntry':
-                try:
-                    number_from_user.append(int(child_widget.get()))
-                except ValueError:
-                    self.result_label_text.set('Invalid input, please check you entered numbers and try again')
+                entries.append(child_widget)
+        return entries
+
+    def check_numbers(self):
+        children_widgets = self.get_entries()
+        number_from_user = []
+        for child_widget in children_widgets:
+            try:
+                number_from_user.append(int(child_widget.get()))
+            except ValueError:
+                self.result_label_text.set('Invalid input, please check you entered numbers and try again')
 
         if self.generated_numbers == number_from_user:
-            self.result_label_text.set('Well done!')
+            self.update_message('Well done!')
         else:
-            self.result_label_text.set('Wrong, try again')
+            self.update_message('Wrong, try again')
+        self.disable_game()
 
+    def update_message(self, message):
+        self.result_label_text.set(message)
         self.result_label.grid(row=self.add_row(), columnspan=len(self.generated_numbers))
+
+    def disable_game(self):
+        for entry in self.get_entries():
+            entry.config(state=DISABLED)
+        self.go_btn.config(state=DISABLED)
+
+
 
 
 def play_gui(frame, difficulty):
