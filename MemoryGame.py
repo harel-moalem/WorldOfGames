@@ -7,9 +7,10 @@ class FrameData:
 
     current_row = 0
 
-    def __init__(self, frame, difficulty):
+    def __init__(self, frame, difficulty, callback):
         self.frame = frame
         self.generated_numbers = generate_sequence(difficulty)
+        self.callback = callback
         self.message = StringVar()
         self.numbers_label_text = StringVar()
         self.result_label_text = StringVar()
@@ -87,6 +88,8 @@ class FrameData:
 
         if self.generated_numbers == number_from_user:
             self.update_message('Well done!')
+            if self.callback:
+                self.callback()
         else:
             self.update_message('Wrong, try again')
         self.disable_game()
@@ -103,8 +106,8 @@ class FrameData:
 
 
 
-def play_gui(frame, difficulty):
-    FrameData(frame, difficulty)
+def play_gui(frame, difficulty, callback):
+    FrameData(frame, difficulty, callback)
 
 
 

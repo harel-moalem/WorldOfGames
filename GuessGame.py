@@ -5,10 +5,11 @@ from tkinter import ttk
 
 game_data = {}
 
-def play_gui(difficulty, frame):
+def play_gui(difficulty, frame, callback):
     game_data['frame'] = frame
     game_data['difficulty'] = difficulty
     game_data['buttons'] = []
+    game_data['callback'] = callback
     secret_number = generate_number()
     draw_gui(secret_number)
 
@@ -49,6 +50,9 @@ def draw_gui(secret_number):
 def button_clicked(value, secret_number, message):
     if compare_results(value, secret_number):
         message.set('Well done!')
+        if game_data['callback']:
+            game_data['callback']()
+
     else:
         message.set('Nope. Better luck next time!')
 

@@ -14,8 +14,9 @@ class GameGui:
     convertedUSD = None
     margin_error_threshold = 5
 
-    def __init__(self, frame, difficulty):
+    def __init__(self, frame, difficulty, callback):
         self.current_row = 0
+        self.callback = callback
         self.difficulty = difficulty
         self.frame = frame
         self.frame.columnconfigure(0, weight=1)
@@ -36,6 +37,8 @@ class GameGui:
         if user_input > -1:
             if is_guess_right(self.convertedUSD, user_input, self.difficulty):
                 self.set_messages_label_text('Great job!')
+                if self.callback:
+                    self.callback()
             else:
                 self.set_messages_label_text(f'Guess is not exact enough, the USD value is ${self.convertedUSD}')
             self.disable_game()
@@ -74,8 +77,8 @@ class GameGui:
         self.main_label_text.set(text)
 
 
-def play_game_gui(frame, difficulty):
-    GameGui(frame, difficulty)
+def play_game_gui(frame, difficulty, callback):
+    GameGui(frame, difficulty, callback)
 
 
 def generate_amount(min_value=1, max_value=100):

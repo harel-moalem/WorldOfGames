@@ -3,6 +3,7 @@ from tkinter import ttk
 from GuessGame import play_gui as guess_game_play
 from MemoryGame import play_gui as memory_game_play
 from CurrencyRouletteGame import play_game_gui as currency_play_gui
+from Score import add_score
 
 class GUI:
 
@@ -37,12 +38,13 @@ class GUI:
 
         self.game_frame = ttk.Frame(self.mainframe, style='main.TFrame')
         self.game_frame.grid(row=6, columnspan=2)
+        callback = lambda: add_score(difficulty)
         if game == 'Guess Game':
-            guess_game_play(difficulty, self.game_frame)
+            guess_game_play(difficulty, self.game_frame, callback)
         elif game == 'Memory Game':
-            memory_game_play(self.game_frame, difficulty)
+            memory_game_play(self.game_frame, difficulty, callback)
         else:
-            currency_play_gui(self.game_frame, difficulty)
+            currency_play_gui(self.game_frame, difficulty, callback)
 
     def draw_separator(self):
         separator = ttk.Separator(self.mainframe, orient='horizontal')
